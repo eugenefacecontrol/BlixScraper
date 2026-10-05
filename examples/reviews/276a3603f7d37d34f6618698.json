@@ -1,0 +1,15 @@
+{
+  "source_url": "https://blix.pl/sklep/aldi/gazetka/527073/?pageNumber=1",
+  "conditions_complete": true,
+  "note": "Visually reviewed product crop and full Aldi leaflet first page on 2026-10-05. Wesoły Kurnik free-range L eggs: 10 pieces per pack, regular 13.49 PLN; every second identical pack 6.49 PLN. Page dates 2026-10-05..10. No card/coupon or product-specific limit shown for eggs. Other products have separately labeled limits.",
+  "price_grosz": 1349,
+  "basis": "package",
+  "package_quantity": "10",
+  "unit": "piece",
+  "pack_price_cycle_grosz": [
+    1349,
+    649
+  ],
+  "required_cards": [],
+  "required_coupons": []
+}

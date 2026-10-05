@@ -111,3 +111,25 @@ def test_daily_eligibility_and_loose_limit(setup):
     assert quote(o,i,['Kaufland Card XTRA'])[0] is None
     assert quote(o,i,['Kaufland Card XTRA'],[],['first_receipt_today'])[0]['total_pln']=='2.99'
     assert quote(o,{**i,'quantity':3},['Kaufland Card XTRA'],[],['first_receipt_today'])[0] is None
+
+@pytest.mark.parametrize('pieces,total',[(10,'13.49'),(20,'19.98'),(30,'33.47'),(40,'39.96'),(11,'19.98')])
+def test_every_second_egg_pack(setup,pieces,total):
+    _,db=setup
+    o=offer(db,name='Jajka z wolnego wybiegu L',price=1349,unit='piece',package_quantity=10,
+            pack_price_cycle_grosz=[1349,649])
+    q,_=quote(o,{'quantity':pieces,'unit':'piece'})
+    assert q['total_pln']==total
+    assert q['extra']==str(q['packs']*10-pieces)
+
+@pytest.mark.parametrize('cycle',[[1349],[999,649],[1349,-1],[1349,True],'1349,649'])
+def test_invalid_pack_price_cycle(setup,cycle):
+    _,db=setup
+    o=offer(db)
+    with pytest.raises(ValueError):
+        validate_evidence(o,{**o['evidence'],'pack_price_cycle_grosz':cycle})
+
+def test_cycle_does_not_stack_with_free_packs(setup):
+    _,db=setup
+    o=offer(db)
+    with pytest.raises(ValueError):
+        validate_evidence(o,{**o['evidence'],'pack_price_cycle_grosz':[499,199],'buy':2,'free':1})

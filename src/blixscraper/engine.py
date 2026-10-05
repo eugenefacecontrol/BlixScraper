@@ -48,7 +48,7 @@ def validate_evidence(o,e):
     """Called only by local CLI; review is not exposed as an MCP tool."""
     allowed = {'source_url','reviewed_at','note','price_grosz','basis','package_quantity','unit',
                'min_packs','buy','free','required_cards','required_coupons','max_packs','fat_percent',
-               'conditions_complete','raw_snapshot','max_quantity','required_confirmations'}
+               'conditions_complete','raw_snapshot','max_quantity','required_confirmations','pack_price_cycle_grosz'}
     if set(e)-allowed:
         raise ValueError('Unknown evidence fields')
     if not e.get('conditions_complete') or not e.get('note') or e.get('source_url') != o['source_url']:
@@ -64,6 +64,12 @@ def validate_evidence(o,e):
     for key in ('min_packs','buy','free','max_packs'):
         if key in e and (not isinstance(e[key],int) or isinstance(e[key],bool) or e[key]<1):
             raise ValueError(f'{key} must be a positive integer')
+    cycle = e.get('pack_price_cycle_grosz')
+    if cycle is not None:
+        if e['basis']!='package' or not isinstance(cycle,list) or not 2<=len(cycle)<=10 or any(not isinstance(v,int) or isinstance(v,bool) or v<0 for v in cycle):
+            raise ValueError('Package price cycle needs 2..10 non-negative integer grosz prices')
+        if cycle[0]!=e['price_grosz'] or any(k in e for k in ('buy','free')):
+            raise ValueError('Cycle must start at base price and cannot combine with buy/free')
     if ('buy' in e) != ('free' in e):
         raise ValueError('buy/free must be specified together')
     if e.get('max_packs',10**9)<e.get('min_packs',1):
@@ -113,6 +119,10 @@ def quote(o,item,cards=(),coupons=(),confirmations=()):
             buy,free = e['buy'],e['free']
             paid -= (packs//(buy+free))*free
         obtained,cost = packs*pack,price*paid
+        if e.get('pack_price_cycle_grosz'):
+            cycle = e['pack_price_cycle_grosz']
+            groups,remainder = divmod(packs,len(cycle))
+            cost = Decimal(groups*sum(cycle)+sum(cycle[:remainder]))/100
         unitprice = cost/obtained
     if e.get('max_quantity') is not None and obtained>decimal(e['max_quantity']):
         return None,'Purchase quantity exceeds verified promotion limit'
