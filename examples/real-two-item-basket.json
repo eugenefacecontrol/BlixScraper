@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "query": "mleko",
+      "quantity": 2,
+      "unit": "l",
+      "fat_percent": 3.2,
+      "offer_ids": [
+        "e54e09e6e10eb8707760dc4e"
+      ]
+    },
+    {
+      "query": "banany",
+      "quantity": 1,
+      "unit": "kg",
+      "offer_ids": [
+        "fe3402af8ed8007b1a3d6e46"
+      ]
+    }
+  ],
+  "max_stores": 2,
+  "cards": [
+    "Moja Biedronka",
+    "Lidl Plus"
+  ]
+}

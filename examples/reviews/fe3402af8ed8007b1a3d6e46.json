@@ -1,0 +1,16 @@
+{
+  "source_url": "https://blix.pl/sklep/kaufland/gazetka/527217/?pageNumber=19",
+  "note": "Visually reviewed full leaflet page 19 and product crop on 2026-10-05. Bananas loose, 2.99 PLN/kg only with Kaufland Card XTRA, up to 2 kg, only first receipt daily. Without card or above limit: 6.99 PLN/kg (not modeled here). User must confirm first receipt eligibility. Validity 2026-10-01..07.",
+  "conditions_complete": true,
+  "price_grosz": 299,
+  "basis": "per_unit",
+  "unit": "kg",
+  "max_quantity": "2",
+  "required_cards": [
+    "Kaufland Card XTRA"
+  ],
+  "required_coupons": [],
+  "required_confirmations": [
+    "kaufland_first_receipt_today"
+  ]
+}

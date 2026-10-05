@@ -1,0 +1,19 @@
+[project]
+name = "blixscraper"
+version = "0.1.0"
+description = "Local, evidence-aware Polish grocery offer MCP"
+requires-python = ">=3.11"
+dependencies = ["mcp>=1.26,<2", "beautifulsoup4>=4.14,<5", "httpx>=0.28,<1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+blix = "blixscraper.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

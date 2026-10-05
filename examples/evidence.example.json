@@ -1,0 +1,12 @@
+{
+  "source_url": "REPLACE_WITH_EXACT_SOURCE_URL_FROM_GET_OFFER",
+  "note": "TEMPLATE ONLY. Replace after reading the leaflet image, including all small print. Do not import this example as real evidence.",
+  "conditions_complete": true,
+  "price_grosz": 499,
+  "basis": "package",
+  "package_quantity": "0.2",
+  "unit": "kg",
+  "min_packs": 1,
+  "required_cards": [],
+  "required_coupons": []
+}

@@ -1,0 +1,12 @@
+{
+  "items": [
+    {"query": "mleko", "quantity": 2, "unit": "l", "fat_percent": 3.2, "excluded_terms": ["napój", "proszku"]},
+    {"query": "masło", "quantity": 0.4, "unit": "kg", "fat_percent": 82, "excluded_terms": ["ciała", "orzechowe"]},
+    {"query": "jaja", "alternatives": ["jajka"], "quantity": 10, "unit": "piece"},
+    {"query": "banany", "quantity": 1, "unit": "kg"},
+    {"query": "kawa", "quantity": 0.5, "unit": "kg", "required_terms": ["mielona"], "excluded_terms": ["ziarnista", "rozpuszczalna"]}
+  ],
+  "max_stores": 2,
+  "cards": ["Moja Biedronka", "Lidl Plus"],
+  "coupons": []
+}

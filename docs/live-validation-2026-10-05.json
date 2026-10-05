@@ -1,0 +1,411 @@
+{
+  "checked_at": "2026-10-05",
+  "transport": "actual MCP streaming HTTP on loopback",
+  "tools": [
+    "data_status",
+    "search_offers",
+    "get_offer",
+    "compare_basket"
+  ],
+  "search_matches": 58,
+  "verified_details_source": "https://blix.pl/sklep/kaufland/gazetka/527043/?pageNumber=20",
+  "collection_summary": {
+    "biedronka": {
+      "offers": 3966,
+      "active_leaflets": 13,
+      "pages_fetched": 13,
+      "errors": [],
+      "unknown_date_leaflets": [],
+      "catalog_complete": false
+    },
+    "lidl": {
+      "offers": 765,
+      "active_leaflets": 4,
+      "pages_fetched": 4,
+      "errors": [],
+      "unknown_date_leaflets": [],
+      "catalog_complete": false
+    },
+    "aldi": {
+      "offers": 878,
+      "active_leaflets": 7,
+      "pages_fetched": 7,
+      "errors": [],
+      "unknown_date_leaflets": [],
+      "catalog_complete": false
+    },
+    "kaufland": {
+      "offers": 1353,
+      "active_leaflets": 7,
+      "pages_fetched": 7,
+      "errors": [],
+      "unknown_date_leaflets": [
+        "458402"
+      ],
+      "catalog_complete": false
+    }
+  },
+  "real_two_items_without_kaufland_card": {
+    "best_complete": null,
+    "kaufland_partial": {
+      "stores": [
+        "kaufland"
+      ],
+      "selected_stores": [
+        "kaufland"
+      ],
+      "lines": [
+        {
+          "offer_id": "e54e09e6e10eb8707760dc4e",
+          "store": "kaufland",
+          "name": "Mleko świeże Łaciate 3,2%",
+          "requested": "2",
+          "unit": "l",
+          "packs": 2,
+          "obtained": "2",
+          "extra": "0",
+          "total_pln": "5.98",
+          "effective_unit_price_pln": "2.99",
+          "source_url": "https://blix.pl/sklep/kaufland/gazetka/527043/?pageNumber=20",
+          "conditions": {
+            "source_url": "https://blix.pl/sklep/kaufland/gazetka/527043/?pageNumber=20",
+            "note": "Visually reviewed product crop and full leaflet page 20 on 2026-10-05. Łaciate fresh milk 3.2%, 1 l bottle, 2.99 PLN. No card/minimum label for this product on the full page; neighboring card offers are separately marked. Validity from source JSON: 2026-10-01..07.",
+            "conditions_complete": true,
+            "price_grosz": 299,
+            "basis": "package",
+            "package_quantity": "1",
+            "unit": "l",
+            "fat_percent": 3.2,
+            "required_cards": [],
+            "required_coupons": [],
+            "reviewed_at": "2026-10-05T06:04:11.861265+00:00"
+          },
+          "match_kind": "exact",
+          "item_index": 0
+        }
+      ],
+      "missing": [
+        {
+          "item_index": 1,
+          "query": "banany",
+          "quantity": 1,
+          "unit": "kg",
+          "offer_ids": [
+            "fe3402af8ed8007b1a3d6e46"
+          ]
+        }
+      ],
+      "complete": false,
+      "total_pln": "5.98",
+      "total_kind": "partial_subtotal"
+    },
+    "unconfirmed_reasons": [
+      "Required loyalty card missing"
+    ]
+  },
+  "real_two_items_with_kaufland_card_and_confirmed_first_receipt": {
+    "stores": [
+      "kaufland"
+    ],
+    "selected_stores": [
+      "kaufland"
+    ],
+    "lines": [
+      {
+        "offer_id": "e54e09e6e10eb8707760dc4e",
+        "store": "kaufland",
+        "name": "Mleko świeże Łaciate 3,2%",
+        "requested": "2",
+        "unit": "l",
+        "packs": 2,
+        "obtained": "2",
+        "extra": "0",
+        "total_pln": "5.98",
+        "effective_unit_price_pln": "2.99",
+        "source_url": "https://blix.pl/sklep/kaufland/gazetka/527043/?pageNumber=20",
+        "conditions": {
+          "source_url": "https://blix.pl/sklep/kaufland/gazetka/527043/?pageNumber=20",
+          "note": "Visually reviewed product crop and full leaflet page 20 on 2026-10-05. Łaciate fresh milk 3.2%, 1 l bottle, 2.99 PLN. No card/minimum label for this product on the full page; neighboring card offers are separately marked. Validity from source JSON: 2026-10-01..07.",
+          "conditions_complete": true,
+          "price_grosz": 299,
+          "basis": "package",
+          "package_quantity": "1",
+          "unit": "l",
+          "fat_percent": 3.2,
+          "required_cards": [],
+          "required_coupons": [],
+          "reviewed_at": "2026-10-05T06:04:11.861265+00:00"
+        },
+        "match_kind": "exact",
+        "item_index": 0
+      },
+      {
+        "offer_id": "fe3402af8ed8007b1a3d6e46",
+        "store": "kaufland",
+        "name": "Banany luzem",
+        "requested": "1",
+        "unit": "kg",
+        "packs": null,
+        "obtained": "1",
+        "extra": "0",
+        "total_pln": "2.99",
+        "effective_unit_price_pln": "2.99",
+        "source_url": "https://blix.pl/sklep/kaufland/gazetka/527217/?pageNumber=19",
+        "conditions": {
+          "source_url": "https://blix.pl/sklep/kaufland/gazetka/527217/?pageNumber=19",
+          "note": "Visually reviewed full leaflet page 19 and product crop on 2026-10-05. Bananas loose, 2.99 PLN/kg only with Kaufland Card XTRA, up to 2 kg, only first receipt daily. Without card or above limit: 6.99 PLN/kg (not modeled here). User must confirm first receipt eligibility. Validity 2026-10-01..07.",
+          "conditions_complete": true,
+          "price_grosz": 299,
+          "basis": "per_unit",
+          "unit": "kg",
+          "max_quantity": "2",
+          "required_cards": [
+            "Kaufland Card XTRA"
+          ],
+          "required_coupons": [],
+          "required_confirmations": [
+            "kaufland_first_receipt_today"
+          ],
+          "reviewed_at": "2026-10-05T06:04:12.252722+00:00"
+        },
+        "match_kind": "exact",
+        "item_index": 1
+      }
+    ],
+    "missing": [],
+    "complete": true,
+    "total_pln": "8.97",
+    "total_kind": "full_basket"
+  },
+  "requested_five_items": {
+    "best_complete": null,
+    "unconfirmed_count": 50,
+    "one_store": [
+      {
+        "store": [
+          "biedronka"
+        ],
+        "total_pln": "0.00",
+        "total_kind": "partial_subtotal",
+        "missing": [
+          {
+            "item_index": 0,
+            "query": "mleko",
+            "quantity": 2,
+            "unit": "l",
+            "fat_percent": 3.2,
+            "excluded_terms": [
+              "napój",
+              "proszku"
+            ]
+          },
+          {
+            "item_index": 1,
+            "query": "masło",
+            "quantity": 0.4,
+            "unit": "kg",
+            "fat_percent": 82,
+            "excluded_terms": [
+              "ciała",
+              "orzechowe"
+            ]
+          },
+          {
+            "item_index": 2,
+            "query": "jaja",
+            "alternatives": [
+              "jajka"
+            ],
+            "quantity": 10,
+            "unit": "piece"
+          },
+          {
+            "item_index": 3,
+            "query": "banany",
+            "quantity": 1,
+            "unit": "kg"
+          },
+          {
+            "item_index": 4,
+            "query": "kawa",
+            "quantity": 0.5,
+            "unit": "kg",
+            "required_terms": [
+              "mielona"
+            ],
+            "excluded_terms": [
+              "ziarnista",
+              "rozpuszczalna"
+            ]
+          }
+        ]
+      },
+      {
+        "store": [
+          "lidl"
+        ],
+        "total_pln": "0.00",
+        "total_kind": "partial_subtotal",
+        "missing": [
+          {
+            "item_index": 0,
+            "query": "mleko",
+            "quantity": 2,
+            "unit": "l",
+            "fat_percent": 3.2,
+            "excluded_terms": [
+              "napój",
+              "proszku"
+            ]
+          },
+          {
+            "item_index": 1,
+            "query": "masło",
+            "quantity": 0.4,
+            "unit": "kg",
+            "fat_percent": 82,
+            "excluded_terms": [
+              "ciała",
+              "orzechowe"
+            ]
+          },
+          {
+            "item_index": 2,
+            "query": "jaja",
+            "alternatives": [
+              "jajka"
+            ],
+            "quantity": 10,
+            "unit": "piece"
+          },
+          {
+            "item_index": 3,
+            "query": "banany",
+            "quantity": 1,
+            "unit": "kg"
+          },
+          {
+            "item_index": 4,
+            "query": "kawa",
+            "quantity": 0.5,
+            "unit": "kg",
+            "required_terms": [
+              "mielona"
+            ],
+            "excluded_terms": [
+              "ziarnista",
+              "rozpuszczalna"
+            ]
+          }
+        ]
+      },
+      {
+        "store": [
+          "aldi"
+        ],
+        "total_pln": "0.00",
+        "total_kind": "partial_subtotal",
+        "missing": [
+          {
+            "item_index": 0,
+            "query": "mleko",
+            "quantity": 2,
+            "unit": "l",
+            "fat_percent": 3.2,
+            "excluded_terms": [
+              "napój",
+              "proszku"
+            ]
+          },
+          {
+            "item_index": 1,
+            "query": "masło",
+            "quantity": 0.4,
+            "unit": "kg",
+            "fat_percent": 82,
+            "excluded_terms": [
+              "ciała",
+              "orzechowe"
+            ]
+          },
+          {
+            "item_index": 2,
+            "query": "jaja",
+            "alternatives": [
+              "jajka"
+            ],
+            "quantity": 10,
+            "unit": "piece"
+          },
+          {
+            "item_index": 3,
+            "query": "banany",
+            "quantity": 1,
+            "unit": "kg"
+          },
+          {
+            "item_index": 4,
+            "query": "kawa",
+            "quantity": 0.5,
+            "unit": "kg",
+            "required_terms": [
+              "mielona"
+            ],
+            "excluded_terms": [
+              "ziarnista",
+              "rozpuszczalna"
+            ]
+          }
+        ]
+      },
+      {
+        "store": [
+          "kaufland"
+        ],
+        "total_pln": "5.98",
+        "total_kind": "partial_subtotal",
+        "missing": [
+          {
+            "item_index": 1,
+            "query": "masło",
+            "quantity": 0.4,
+            "unit": "kg",
+            "fat_percent": 82,
+            "excluded_terms": [
+              "ciała",
+              "orzechowe"
+            ]
+          },
+          {
+            "item_index": 2,
+            "query": "jaja",
+            "alternatives": [
+              "jajka"
+            ],
+            "quantity": 10,
+            "unit": "piece"
+          },
+          {
+            "item_index": 3,
+            "query": "banany",
+            "quantity": 1,
+            "unit": "kg"
+          },
+          {
+            "item_index": 4,
+            "query": "kawa",
+            "quantity": 0.5,
+            "unit": "kg",
+            "required_terms": [
+              "mielona"
+            ],
+            "excluded_terms": [
+              "ziarnista",
+              "rozpuszczalna"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

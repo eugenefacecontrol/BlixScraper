@@ -1,0 +1,12 @@
+{
+  "source_url": "https://blix.pl/sklep/kaufland/gazetka/527043/?pageNumber=20",
+  "note": "Visually reviewed product crop and full leaflet page 20 on 2026-10-05. Łaciate fresh milk 3.2%, 1 l bottle, 2.99 PLN. No card/minimum label for this product on the full page; neighboring card offers are separately marked. Validity from source JSON: 2026-10-01..07.",
+  "conditions_complete": true,
+  "price_grosz": 299,
+  "basis": "package",
+  "package_quantity": "1",
+  "unit": "l",
+  "fat_percent": 3.2,
+  "required_cards": [],
+  "required_coupons": []
+}
