@@ -11,8 +11,11 @@ class Config:
     cache_hours: float = 6.0
     stale_hours: float = 24.0
     max_pages_per_leaflet: int = 150
+    auto_refresh: bool = True
 
     def __post_init__(self):
+        if not isinstance(self.auto_refresh,bool):
+            raise ValueError('auto_refresh must be boolean')
         if not 1 <= len(self.stores) <= 12 or any(not re.fullmatch(r'[a-z0-9-]+', s) for s in self.stores):
             raise ValueError('Configure 1..12 store slugs')
         if len(set(self.stores)) != len(self.stores):

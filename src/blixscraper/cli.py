@@ -28,7 +28,9 @@ def main():
         return
     if args.command=='refresh':
         result=Collector(cfg,db).refresh()
-    elif args.command=='status': result=shop.freshness()
+    elif args.command=='status':
+        from .refresh import RefreshManager
+        result={**shop.freshness(),'refresh':RefreshManager(cfg,db).status(),'auto_refresh':cfg.auto_refresh}
     elif args.command=='search': result=shop.search(args.query)
     elif args.command=='offer': result=shop.details(args.id)
     elif args.command=='compare': result=shop.compare(**json.loads(Path(args.basket).read_text()))

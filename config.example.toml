@@ -4,3 +4,5 @@ request_interval_seconds = 2.0
 cache_hours = 6
 stale_hours = 24
 max_pages_per_leaflet = 150
+
+auto_refresh = true

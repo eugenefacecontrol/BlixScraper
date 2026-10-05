@@ -12,6 +12,7 @@ class Database:
             CREATE TABLE IF NOT EXISTS offers(id TEXT PRIMARY KEY, store TEXT NOT NULL, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS pages(url TEXT PRIMARY KEY, fetched_at TEXT NOT NULL, html TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS coverage(store TEXT PRIMARY KEY, payload TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS refresh_state(id INTEGER PRIMARY KEY CHECK(id=1), payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS evidence(offer_id TEXT PRIMARY KEY, payload TEXT NOT NULL);
             ''')
 
@@ -58,3 +59,12 @@ class Database:
     def verify(self, offer_id, evidence):
         with self.connect() as db:
             db.execute('INSERT OR REPLACE INTO evidence VALUES(?,?)',(offer_id,json.dumps(evidence)))
+
+    def refresh_state(self):
+        with self.connect() as db:
+            row = db.execute('SELECT payload FROM refresh_state WHERE id=1').fetchone()
+            return json.loads(row['payload']) if row else {}
+
+    def save_refresh_state(self, state):
+        with self.connect() as db:
+            db.execute('INSERT OR REPLACE INTO refresh_state VALUES(1,?)',(json.dumps(state),))
