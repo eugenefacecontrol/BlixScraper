@@ -33,6 +33,12 @@ def create_server(config=None):
         return shop.search(query,stores,day,limit,offset)
 
     @mcp.tool(annotations=read)
+    def search_history(query: str, since: str, until: str | None = None, stores: list[str] | None = None,
+                       limit: int = 50, offset: int = 0) -> dict:
+        """Search expired offers in local archive by product and YYYY-MM-DD range. Includes sources and observed promotion-start weekdays, not publication dates or forecasts. Partial archive: no matches is not proof of absence. Populate with local CLI collect-history first; this tool only reads. Basic Russian aliases supported."""
+        return shop.history(query,since,until,stores,limit,offset)
+
+    @mcp.tool(annotations=read)
     def get_offer(offer_id: str) -> dict:
         """Get raw source JSON, leaflet/page link, crop/image, validity, review evidence and limitations for an ID returned by search_offers."""
         return shop.details(offer_id)

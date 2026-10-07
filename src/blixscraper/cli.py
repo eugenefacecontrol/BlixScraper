@@ -13,6 +13,12 @@ def main():
     sub = p.add_subparsers(dest='command',required=True)
     sub.add_parser('refresh',help='Collect public HTML with robots, rate limit and SQLite cache')
     sub.add_parser('status')
+    s = sub.add_parser('collect-history',help='Collect visible expired leaflets; bounded, partial archive')
+    s.add_argument('--since',required=True); s.add_argument('--until'); s.add_argument('--stores',nargs='+')
+    s.add_argument('--max-leaflets',type=int,default=5)
+    s = sub.add_parser('history'); s.add_argument('query'); s.add_argument('--since',required=True)
+    s.add_argument('--until'); s.add_argument('--stores',nargs='+'); s.add_argument('--limit',type=int,default=50)
+    s.add_argument('--offset',type=int,default=0)
     s = sub.add_parser('search'); s.add_argument('query')
     s = sub.add_parser('offer'); s.add_argument('id')
     s = sub.add_parser('compare'); s.add_argument('basket',help='Local basket JSON file')
@@ -28,6 +34,22 @@ def main():
         return
     if args.command=='refresh':
         result=Collector(cfg,db).refresh()
+    elif args.command=='collect-history':
+        from .collector import BASE
+        from urllib.robotparser import RobotFileParser
+        since,until=shop._day(args.since),shop._day(args.until)
+        stores=shop._stores(args.stores)
+        if since>until or not 1<=args.max_leaflets<=50:
+            p.error('Valid range and max-leaflets 1..50 required')
+        collector=Collector(cfg,db)
+        try:
+            robots,_=collector.get(BASE+'/robots.txt')
+            collector.robots=RobotFileParser(); collector.robots.parse(robots.splitlines())
+            result={store:collector.collect_store(store,since,until,args.max_leaflets) for store in stores}
+        finally:
+            collector.client.close()
+    elif args.command=='history':
+        result=shop.history(args.query,args.since,args.until,args.stores,args.limit,args.offset)
     elif args.command=='status':
         from .refresh import RefreshManager
         result={**shop.freshness(),'refresh':RefreshManager(cfg,db).status(),'auto_refresh':cfg.auto_refresh}

@@ -162,6 +162,28 @@ class Shopping:
                 'next_offset':offset+limit if len(rows)>offset+limit else None,'coverage':self.freshness(),
                 'warning':'Displayed price is not a confirmed payable package price; inspect evidence.'}
 
+    def history(self, query, since, until=None, stores=None, limit=50, offset=0):
+        since, until = self._day(since), self._day(until)
+        stores = self._stores(stores)
+        if since > until or not query.strip() or len(query)>200 or not 1<=limit<=100 or not 0<=offset<=100000:
+            raise ValueError('Valid date range, query and pagination required')
+        rows = [o for o in self.db.offers() if o['store'] in stores and o.get('valid_from') and o.get('valid_to')
+                and o['valid_to'] < today() and o['valid_from'] <= until and o['valid_to'] >= since
+                and matches(o,{'query':query})]
+        rows.sort(key=lambda o:(o['valid_from'],o['store'],o['id']),reverse=True)
+        # Count each store/leaflet once, not repeated product crops or pages.
+        events = {(o['store'],str(o['leaflet_id']),o['valid_from']) for o in rows}
+        weekdays = {}
+        for store, leaflet, start in events:
+            weekday = datetime.strptime(start,'%Y-%m-%d').strftime('%A')
+            weekdays.setdefault(store,{})[weekday] = weekdays.get(store,{}).get(weekday,0)+1
+        return {'offers':[self._public(o) for o in rows[offset:offset+limit]],'total_matches':len(rows),
+                'next_offset':offset+limit if len(rows)>offset+limit else None,
+                'distinct_leaflets':len(events),'promotion_start_weekdays':weekdays,
+                'range':{'since':since,'until':until},'archive_coverage':self.db.archive_coverage(),
+                'catalog_complete':False,
+                'warning':'Partial observed history only; absence does not prove no promotion. Weekdays describe offer validity starts, not publication dates or future predictions. Displayed prices and terms require review.'}
+
     @staticmethod
     def _public(o):
         return {k:v for k,v in o.items() if k!='raw'}

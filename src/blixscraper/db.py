@@ -11,6 +11,7 @@ class Database:
             db.executescript('''
             CREATE TABLE IF NOT EXISTS offers(id TEXT PRIMARY KEY, store TEXT NOT NULL, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS pages(url TEXT PRIMARY KEY, fetched_at TEXT NOT NULL, html TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS archive_coverage(store TEXT PRIMARY KEY, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS coverage(store TEXT PRIMARY KEY, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS refresh_state(id INTEGER PRIMARY KEY CHECK(id=1), payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS evidence(offer_id TEXT PRIMARY KEY, payload TEXT NOT NULL);
@@ -68,3 +69,11 @@ class Database:
     def save_refresh_state(self, state):
         with self.connect() as db:
             db.execute('INSERT OR REPLACE INTO refresh_state VALUES(1,?)',(json.dumps(state),))
+
+    def save_archive_coverage(self, store, report):
+        with self.connect() as db:
+            db.execute('INSERT OR REPLACE INTO archive_coverage VALUES(?,?)',(store,json.dumps(report)))
+
+    def archive_coverage(self):
+        with self.connect() as db:
+            return {r['store']:json.loads(r['payload']) for r in db.execute('SELECT * FROM archive_coverage')}

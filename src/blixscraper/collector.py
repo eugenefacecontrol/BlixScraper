@@ -20,7 +20,7 @@ def public_url(url):
     u = urlparse(url)
     return u.scheme == 'https' and u.netloc == 'blix.pl' and (u.path == '/robots.txt' or bool(re.fullmatch(r'/sklep/[a-z0-9-]+/(?:gazetka/\d+/)?',u.path)))
 
-def listing(html, store, day):
+def listing(html, store, day, since=None, until=None):
     soup = BeautifulSoup(html, 'html.parser')
     refs, unknown = {}, []
     for node in soup.select('.leaflet[data-leaflet-id]'):
@@ -35,7 +35,7 @@ def listing(html, store, day):
         except (KeyError, ValueError):
             unknown.append(id_)
             continue
-        if start <= day <= end:
+        if (since is None and start <= day <= end) or (since is not None and start <= until and end >= since and end < day):
             refs[id_] = {'id':id_, 'url':f'{BASE}/sklep/{store}/gazetka/{id_}/', 'start':start, 'end':end}
     all_ids = set(re.findall(r'/sklep/'+re.escape(store)+r'/gazetka/(\d+)',html))
     classified = {n.get('data-leaflet-id') for n in soup.select('.leaflet[data-leaflet-id]') if n.get('data-brand-slug')==store}
@@ -102,7 +102,7 @@ class Collector:
         finally:
             self.client.close()
 
-    def collect_store(self, store):
+    def collect_store(self, store, since=None, until=None, max_leaflets=5):
         report = {'attempted_at':timestamp(), 'day':today(), 'status':'partial', 'discovery_complete':False,
                   'active_leaflets':[], 'unknown_date_leaflets':[], 'leaflets':[], 'errors':[], 'offers_collected':0,
                   'catalog_complete':False, 'reason':'Public HTML does not prove a complete catalogue or promotion terms.'}
@@ -131,8 +131,14 @@ class Collector:
                 ingest(html,url,ts)
             except ValueError as e:
                 report['errors'].append(str(e))
-            refs,unknown = listing(html,store,today())
-            report['active_leaflets'] = refs
+            refs,unknown = listing(html,store,today(),since,until)
+            if since is not None:
+                refs.sort(key=lambda r:(r["start"],r["id"]),reverse=True)
+                report["visible_matching_leaflets"] = len(refs)
+                report["leaflet_cap_reached"] = len(refs)>max_leaflets
+                refs = refs[:max_leaflets]
+                report["requested_range"] = {"since":since,"until":until}
+            report['archive_leaflets' if since is not None else 'active_leaflets'] = refs
             report['unknown_date_leaflets'] = unknown
             # Even all visible refs are only observed discovery, not proven exhaustive.
             report['discovery_complete'] = False
@@ -165,4 +171,8 @@ class Collector:
         self.db.save_offers(list(collected.values()))
         report['offers_collected'] = len(collected)
         report['finished_at'] = timestamp()
-        self.db.save_coverage(store,report)
+        if since is None:
+            self.db.save_coverage(store,report)
+        else:
+            self.db.save_archive_coverage(store,report)
+        return report

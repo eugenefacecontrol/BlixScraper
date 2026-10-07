@@ -13,10 +13,10 @@ def test_actual_stdio_protocol(tmp_path):
                 result=await client.initialize()
                 assert result.serverInfo.name=='Blix shopping assistant'
                 tools=(await client.list_tools()).tools
-                assert {t.name for t in tools}=={'data_status','search_offers','get_offer','compare_basket','refresh_offers'}
+                assert {t.name for t in tools}=={'data_status','search_offers','get_offer','compare_basket','refresh_offers','search_history'}
                 assert all(t.annotations.readOnlyHint for t in tools if t.name!='refresh_offers')
                 assert not next(t for t in tools if t.name=='refresh_offers').annotations.readOnlyHint
-                for name,args in [('data_status',{}),('search_offers',{'query':'молоко'}),
+                for name,args in [('data_status',{}),('search_history',{'query':'яйца','since':'2026-09-01'}),('search_offers',{'query':'молоко'}),
                                   ('compare_basket',{'items':[{'query':'mleko','quantity':2,'unit':'l'}]} )]:
                     r=await client.call_tool(name,args)
                     assert not r.isError
