@@ -9,6 +9,11 @@ class Database:
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as db:
             db.executescript('''
+            CREATE TABLE IF NOT EXISTS products(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS receipt_items(receipt_id TEXT NOT NULL REFERENCES receipts(id) ON DELETE CASCADE,
+                line_index INTEGER NOT NULL, product_id TEXT NOT NULL REFERENCES products(id), payload TEXT NOT NULL,
+                PRIMARY KEY(receipt_id,line_index));
+            CREATE INDEX IF NOT EXISTS receipt_items_product ON receipt_items(product_id);
             CREATE TABLE IF NOT EXISTS receipts(id TEXT PRIMARY KEY, purchased_on TEXT NOT NULL, store TEXT NOT NULL, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS offers(id TEXT PRIMARY KEY, store TEXT NOT NULL, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS pages(url TEXT PRIMARY KEY, fetched_at TEXT NOT NULL, html TEXT NOT NULL);
@@ -22,6 +27,7 @@ class Database:
     def connect(self):
         with sqlite3.connect(self.path, timeout=30) as db:
             db.row_factory = sqlite3.Row
+            db.execute("PRAGMA foreign_keys=ON")
             yield db
 
     def save_offers(self, offers):
