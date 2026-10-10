@@ -9,6 +9,7 @@ class Database:
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as db:
             db.executescript('''
+            CREATE TABLE IF NOT EXISTS receipts(id TEXT PRIMARY KEY, purchased_on TEXT NOT NULL, store TEXT NOT NULL, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS offers(id TEXT PRIMARY KEY, store TEXT NOT NULL, payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS pages(url TEXT PRIMARY KEY, fetched_at TEXT NOT NULL, html TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS archive_coverage(store TEXT PRIMARY KEY, payload TEXT NOT NULL);
